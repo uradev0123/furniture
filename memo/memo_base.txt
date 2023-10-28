@@ -1,0 +1,37 @@
+1. flutterプロジェクトを作成
+
+2. firebase以外のパッケージをpubspec.yamlに記述
+
+3. firebaseを導入
+    動画 https://youtu.be/BWTQkkLC-Mo?si=yJDa-ToS6Cn1HBuN
+    または learningプロジェクトのmemoを参考にしてfirebaseを導入
+    ※ androidファイルを編集することを忘れずない
+
+4. firebase関連のパッケージをpubspec.yamlに記述
+
+5. gitと連携（今回は動画でやったけど本の通りやっても良かったかも）
+    動画 https://youtu.be/vFt1AXMcGJg?si=GrPmwlTNy05zl27L
+    githubにリポジトリを作成
+    flutterプロジェクトのターミナルでgithubリポジトリと連携するコマンドを入力
+        git init
+        git remote add origin https://github.com/tarobeeflight/furniture.git
+    ※ ここから動画と違う
+    SourceTreeを開く
+        開かない場合 https://kan-kikuchi.hatenablog.com/entry/SourceTree_Not_Start
+        ユーザー/ユーザー名/AppData/Local/AtlassianにあるSourceTree.exe~~~フォルダを削除
+    新しいタブを開いてAddでflutterプロジェクトを選択
+
+
+6. auto_routerを生成
+    main()に渡すAppがAppRouterになる
+
+7. riverpodを導入
+
+
+echo "# furniture" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/tarobeeflight/furniture.git
+git push -u origin main
