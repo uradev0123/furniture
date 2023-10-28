@@ -32,5 +32,7 @@
     runApp()に渡すAppがAppRouterになる
 
 8. riverpodを導入
+    templateプロジェクト（learningに移動したい）を参照して導入
+    statelessをconsumerに変えるだけで何のトラブルもなかった
     runApp()に渡すAppがProviderScope(child: AppRouter)になる
 
