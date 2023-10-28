@@ -26,7 +26,11 @@
     templateプロジェクトのフォルダをそのままコピーできる
 
 7. auto_routerを生成
-    main()に渡すAppがAppRouterになる
+    learningプロジェクトを参照。
+    このときボトムナビ直下のpageも作ることになるが、riverpodも使用するためstatelessではなくconsumerで作りたい
+    今回は慣れていないので一旦statelessで作ったが、慣れたらいきなりconsumerで作るといいと思う
+    runApp()に渡すAppがAppRouterになる
 
 8. riverpodを導入
+    runApp()に渡すAppがProviderScope(child: AppRouter)になる
 
