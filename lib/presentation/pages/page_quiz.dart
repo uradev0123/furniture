@@ -3,7 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture/application/state/quiz/index/index.dart';
 import 'package:furniture/presentation/widgets/my_widgets.dart';
-
+import 'package:furniture/presentation/dialogs/my_dialogs.dart';
 
 @RoutePage()
 class PageQuiz extends ConsumerWidget {
@@ -28,11 +28,18 @@ class PageQuiz extends ConsumerWidget {
     // );
 
     const details = 'Yチェア\nハンス・J・ウェグナー\nカールハンセン&サン\n1949年設立';
-    final indexText = TestText(details);
+    final detailsText = TestText(details);
     final image = ImageL(Image.network('https://user0514.cdnw.net/shared/img/thumb/shikunDJI_0096-NR233_TP_V.jpg'));
     final answerButton = ButtonL(
       text: '答え',
-      onPressed: () {},
+      onPressed: () async {
+        final isRetry = await showDialog(
+          context: context,
+          builder: (_) => QuizEndDialog(),
+        );
+        // ダイアログを閉じた後
+        debugPrint(isRetry.toString());
+      },
     );
     final nextButton = ButtonL(
       text: '次へ',
@@ -54,7 +61,7 @@ class PageQuiz extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         image,
-        indexText,
+        detailsText,
         answerButton,
       ],
     );
