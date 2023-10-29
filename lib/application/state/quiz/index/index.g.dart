@@ -6,7 +6,7 @@ part of 'index.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$indexNotifierHash() => r'c51a8111200b03346d9a86439e228d2c427e33fc';
+String _$indexNotifierHash() => r'2dea9d80a754efe2463950336452aeeaba9fbe8a';
 
 /// See also [IndexNotifier].
 @ProviderFor(IndexNotifier)
