@@ -9,7 +9,7 @@ class IndexNotifier extends _$IndexNotifier {
   }
 
   // テストの状態更新
-  void updateState(){
+  void nextIndex(){
     // 変更前のデータ（stateはパッケージが保持する変数。多分notifierが現在監視している値）
     final oldState = state;
     // 変更後のデータ
