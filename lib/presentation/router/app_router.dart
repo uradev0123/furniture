@@ -11,7 +11,7 @@ class AppRouter extends $AppRouter {
       page: RouteRoot.page,
       children: [
         AutoRoute(
-          initial: true,
+          // initial: true,
           path: 'furniture',
           page: RouteFurnitureList.page,
         ),
@@ -24,6 +24,7 @@ class AppRouter extends $AppRouter {
           page: RouteBrandList.page,
         ),
         AutoRoute(
+          initial: true,
           path: 'quiz',
           page: RouteQuiz.page,
         ),
