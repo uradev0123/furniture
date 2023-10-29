@@ -18,4 +18,5 @@ class Designer with _$Designer {
   }) = _Designer;
 
  factory Designer.fromJson(Map<String, dynamic> json) => _$DesignerFromJson(json);
+
 }
