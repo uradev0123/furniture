@@ -1,26 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'index.dart';
+part of 'is_question.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$indexNotifierHash() => r'2fe1d0319b412ea4f4c99e5aa288132935d5dcb6';
+String _$isQuestionNotifierHash() =>
+    r'2d439608d435b034176db187508fabdb3df2bac0';
 
-/// See also [IndexNotifier].
-@ProviderFor(IndexNotifier)
-final indexNotifierProvider =
-    AutoDisposeNotifierProvider<IndexNotifier, int>.internal(
-  IndexNotifier.new,
-  name: r'indexNotifierProvider',
+/// See also [IsQuestionNotifier].
+@ProviderFor(IsQuestionNotifier)
+final isQuestionNotifierProvider =
+    AutoDisposeNotifierProvider<IsQuestionNotifier, bool>.internal(
+  IsQuestionNotifier.new,
+  name: r'isQuestionNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$indexNotifierHash,
+      : _$isQuestionNotifierHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$IndexNotifier = AutoDisposeNotifier<int>;
+typedef _$IsQuestionNotifier = AutoDisposeNotifier<bool>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
