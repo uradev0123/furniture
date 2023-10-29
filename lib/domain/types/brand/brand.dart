@@ -6,6 +6,8 @@ part 'brand.g.dart';
 
 @freezed
 class Brand with _$Brand {
+  const Brand._();
+
   const factory Brand({
     required String enName,
     required String jaName,
@@ -15,4 +17,9 @@ class Brand with _$Brand {
   }) = _Brand;
 
  factory Brand.fromJson(Map<String, dynamic> json) => _$BrandFromJson(json);
+
+
+
+ String get period => '$foundedYear - ${bankruptcyYear ?? ''}';
+ String get details => '$jaName\n$enName\n設立年：$period\n本国：$country';
 }

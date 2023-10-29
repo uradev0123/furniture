@@ -24,7 +24,7 @@ mixin _$Furniture {
   String get jaName => throw _privateConstructorUsedError;
   int get designedYear => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
-  Designer get designer => throw _privateConstructorUsedError; // まだ
+  Designer get designer => throw _privateConstructorUsedError;
   Brand get brand => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
   String get memo => throw _privateConstructorUsedError;
@@ -212,7 +212,7 @@ class __$$FurnitureImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$FurnitureImpl with DiagnosticableTreeMixin implements _Furniture {
+class _$FurnitureImpl extends _Furniture with DiagnosticableTreeMixin {
   const _$FurnitureImpl(
       {required this.enName,
       required this.jaName,
@@ -221,7 +221,8 @@ class _$FurnitureImpl with DiagnosticableTreeMixin implements _Furniture {
       required this.designer,
       required this.brand,
       required this.imageUrl,
-      required this.memo});
+      required this.memo})
+      : super._();
 
   factory _$FurnitureImpl.fromJson(Map<String, dynamic> json) =>
       _$$FurnitureImplFromJson(json);
@@ -236,7 +237,6 @@ class _$FurnitureImpl with DiagnosticableTreeMixin implements _Furniture {
   final String type;
   @override
   final Designer designer;
-// まだ
   @override
   final Brand brand;
   @override
@@ -301,7 +301,7 @@ class _$FurnitureImpl with DiagnosticableTreeMixin implements _Furniture {
   }
 }
 
-abstract class _Furniture implements Furniture {
+abstract class _Furniture extends Furniture {
   const factory _Furniture(
       {required final String enName,
       required final String jaName,
@@ -311,6 +311,7 @@ abstract class _Furniture implements Furniture {
       required final Brand brand,
       required final String imageUrl,
       required final String memo}) = _$FurnitureImpl;
+  const _Furniture._() : super._();
 
   factory _Furniture.fromJson(Map<String, dynamic> json) =
       _$FurnitureImpl.fromJson;
@@ -325,7 +326,7 @@ abstract class _Furniture implements Furniture {
   String get type;
   @override
   Designer get designer;
-  @override // まだ
+  @override
   Brand get brand;
   @override
   String get imageUrl;
