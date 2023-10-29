@@ -147,13 +147,14 @@ class __$$BrandImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$BrandImpl with DiagnosticableTreeMixin implements _Brand {
+class _$BrandImpl extends _Brand with DiagnosticableTreeMixin {
   const _$BrandImpl(
       {required this.enName,
       required this.jaName,
       required this.country,
       required this.foundedYear,
-      this.bankruptcyYear});
+      this.bankruptcyYear})
+      : super._();
 
   factory _$BrandImpl.fromJson(Map<String, dynamic> json) =>
       _$$BrandImplFromJson(json);
@@ -219,13 +220,14 @@ class _$BrandImpl with DiagnosticableTreeMixin implements _Brand {
   }
 }
 
-abstract class _Brand implements Brand {
+abstract class _Brand extends Brand {
   const factory _Brand(
       {required final String enName,
       required final String jaName,
       required final String country,
       required final int foundedYear,
       final int? bankruptcyYear}) = _$BrandImpl;
+  const _Brand._() : super._();
 
   factory _Brand.fromJson(Map<String, dynamic> json) = _$BrandImpl.fromJson;
 

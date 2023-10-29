@@ -25,7 +25,7 @@ mixin _$Designer {
   String get country => throw _privateConstructorUsedError;
   String get culture => throw _privateConstructorUsedError;
   DateTime get birthday => throw _privateConstructorUsedError;
-  DateTime get deathday => throw _privateConstructorUsedError;
+  DateTime? get deathday => throw _privateConstructorUsedError;
   String get faceUrl => throw _privateConstructorUsedError;
   String get memo => throw _privateConstructorUsedError;
 
@@ -46,7 +46,7 @@ abstract class $DesignerCopyWith<$Res> {
       String country,
       String culture,
       DateTime birthday,
-      DateTime deathday,
+      DateTime? deathday,
       String faceUrl,
       String memo});
 }
@@ -69,7 +69,7 @@ class _$DesignerCopyWithImpl<$Res, $Val extends Designer>
     Object? country = null,
     Object? culture = null,
     Object? birthday = null,
-    Object? deathday = null,
+    Object? deathday = freezed,
     Object? faceUrl = null,
     Object? memo = null,
   }) {
@@ -94,10 +94,10 @@ class _$DesignerCopyWithImpl<$Res, $Val extends Designer>
           ? _value.birthday
           : birthday // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      deathday: null == deathday
+      deathday: freezed == deathday
           ? _value.deathday
           : deathday // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       faceUrl: null == faceUrl
           ? _value.faceUrl
           : faceUrl // ignore: cast_nullable_to_non_nullable
@@ -124,7 +124,7 @@ abstract class _$$DesignerImplCopyWith<$Res>
       String country,
       String culture,
       DateTime birthday,
-      DateTime deathday,
+      DateTime? deathday,
       String faceUrl,
       String memo});
 }
@@ -145,7 +145,7 @@ class __$$DesignerImplCopyWithImpl<$Res>
     Object? country = null,
     Object? culture = null,
     Object? birthday = null,
-    Object? deathday = null,
+    Object? deathday = freezed,
     Object? faceUrl = null,
     Object? memo = null,
   }) {
@@ -170,10 +170,10 @@ class __$$DesignerImplCopyWithImpl<$Res>
           ? _value.birthday
           : birthday // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      deathday: null == deathday
+      deathday: freezed == deathday
           ? _value.deathday
           : deathday // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       faceUrl: null == faceUrl
           ? _value.faceUrl
           : faceUrl // ignore: cast_nullable_to_non_nullable
@@ -188,16 +188,17 @@ class __$$DesignerImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$DesignerImpl with DiagnosticableTreeMixin implements _Designer {
+class _$DesignerImpl extends _Designer with DiagnosticableTreeMixin {
   const _$DesignerImpl(
       {required this.enName,
       required this.jaName,
       required this.country,
       required this.culture,
       required this.birthday,
-      required this.deathday,
+      this.deathday,
       required this.faceUrl,
-      required this.memo});
+      required this.memo})
+      : super._();
 
   factory _$DesignerImpl.fromJson(Map<String, dynamic> json) =>
       _$$DesignerImplFromJson(json);
@@ -213,7 +214,7 @@ class _$DesignerImpl with DiagnosticableTreeMixin implements _Designer {
   @override
   final DateTime birthday;
   @override
-  final DateTime deathday;
+  final DateTime? deathday;
   @override
   final String faceUrl;
   @override
@@ -275,16 +276,17 @@ class _$DesignerImpl with DiagnosticableTreeMixin implements _Designer {
   }
 }
 
-abstract class _Designer implements Designer {
+abstract class _Designer extends Designer {
   const factory _Designer(
       {required final String enName,
       required final String jaName,
       required final String country,
       required final String culture,
       required final DateTime birthday,
-      required final DateTime deathday,
+      final DateTime? deathday,
       required final String faceUrl,
       required final String memo}) = _$DesignerImpl;
+  const _Designer._() : super._();
 
   factory _Designer.fromJson(Map<String, dynamic> json) =
       _$DesignerImpl.fromJson;
@@ -300,7 +302,7 @@ abstract class _Designer implements Designer {
   @override
   DateTime get birthday;
   @override
-  DateTime get deathday;
+  DateTime? get deathday;
   @override
   String get faceUrl;
   @override

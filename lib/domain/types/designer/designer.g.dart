@@ -13,7 +13,9 @@ _$DesignerImpl _$$DesignerImplFromJson(Map<String, dynamic> json) =>
       country: json['country'] as String,
       culture: json['culture'] as String,
       birthday: DateTime.parse(json['birthday'] as String),
-      deathday: DateTime.parse(json['deathday'] as String),
+      deathday: json['deathday'] == null
+          ? null
+          : DateTime.parse(json['deathday'] as String),
       faceUrl: json['faceUrl'] as String,
       memo: json['memo'] as String,
     );
@@ -25,7 +27,7 @@ Map<String, dynamic> _$$DesignerImplToJson(_$DesignerImpl instance) =>
       'country': instance.country,
       'culture': instance.culture,
       'birthday': instance.birthday.toIso8601String(),
-      'deathday': instance.deathday.toIso8601String(),
+      'deathday': instance.deathday?.toIso8601String(),
       'faceUrl': instance.faceUrl,
       'memo': instance.memo,
     };

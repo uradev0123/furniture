@@ -23,24 +23,18 @@ class FirestoreService {
   }
 
 
-  // 家具1つを取得
-  Future<Furniture> readFurniture(QueryDocumentSnapshot<Map<String, dynamic>> doc) async {
-    // DBから家具一覧のデータを取得
-    // final doc = await db.collection(Collection.furniture).doc('F0001').get();
-    // debugPrint('Debug1\n$doc');
+  // 家具データをFurnutureクラスへ変換
+  Future<Furniture> convertDataToFurniture(QueryDocumentSnapshot<Map<String, dynamic>> doc) async {
 
     final preFurniture = PreFurniture.fromJson(doc.data());
-    // debugPrint('Debug2\n$preFurniture');
 
     // brandId → Brandクラス
     final brandDoc = await db.collection(Collection.brands).doc(preFurniture.brandId).get();
     final brand = Brand.fromJson(brandDoc.data()!);
-    // debugPrint('Debug4\n$brand');
 
     // designerId → Designerクラス
     final designerDoc = await db.collection(Collection.designers).doc(preFurniture.designerId).get();
-    final designer = designerFromMap(designerDoc.data()!);
-    // debugPrint('Debug3\n$designer');
+    final designer = Designer.designerFromMap(designerDoc.data()!);
 
     // PreFurnitureクラス → Furnitureクラス
     final furniture = Furniture(
@@ -54,7 +48,7 @@ class FirestoreService {
       memo: preFurniture.memo,
     );
 
-    // debugPrint('Debug5\n$furniture');
+    debugPrint('Debug5\n$furniture');
     return furniture;
   }
 
@@ -62,40 +56,17 @@ class FirestoreService {
   Future<List<Furniture>> readFurnitureList() async {
     // DBから家具一覧のデータを取得
     final snapshot = await db.collection(Collection.furniture).get();
-    // debugPrint('Debug1\n$snapshot');
 
     // DBデータ → List<Furniture>
     List<Furniture> furnitureList = [];
     snapshot.docs.forEach( // forEachではなくmapの方がきれいだが、戻り値の型がList<Future<Furniture>>になるので使えなかった
         (doc) async {
-          final f = await readFurniture(doc);
+          final f = await convertDataToFurniture(doc);
           furnitureList.add(f);
         }
     );
 
     return furnitureList;
-  }
-
-  Designer designerFromMap(Map<String, dynamic> map) {
-    String enName = map["enName"];
-    String jaName = map["jaName"];
-    String country = map["country"];
-    String culture = map["culture"];
-    DateTime birthday = map["birthday"].toDate();
-    DateTime deathday = map["deathday"].toDate();
-    String faceUrl = map["faceUrl"];
-    String memo = map["memo"];
-
-    return Designer(
-        enName: enName,
-        jaName: jaName,
-        country: country,
-        culture: culture,
-        birthday: birthday,
-        deathday: deathday,
-        faceUrl: faceUrl,
-        memo: memo,
-    );
   }
 }
 

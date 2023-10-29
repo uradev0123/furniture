@@ -7,6 +7,9 @@ part 'furniture.g.dart';
 
 @freezed
 class Furniture with _$Furniture {
+  // 内部コンストラクタ？よくわからんけどこれを書くとプロパティやメソッドをかけるみたい https://flutter.salon/plugin/freezed/
+  const Furniture._();
+
   const factory Furniture({
     required String enName,
     required String jaName,
@@ -15,7 +18,10 @@ class Furniture with _$Furniture {
     required Designer designer,
     required Brand brand,
     required String imageUrl,
-    required String memo,  }) = _Furniture;
+    required String memo,
+  }) = _Furniture;
 
  factory Furniture.fromJson(Map<String, dynamic> json) => _$FurnitureFromJson(json);
+
+ String get details => '$jaName\n${designer.jaName}\n${brand.jaName}\n$designedYear年';
 }
