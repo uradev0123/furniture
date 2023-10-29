@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture/application/state/quiz/index/index.dart';
+import 'package:furniture/infrastructure/firebase/firestore_service.dart';
 import 'package:furniture/presentation/widgets/my_widgets.dart';
 import 'package:furniture/presentation/dialogs/my_dialogs.dart';
 
@@ -10,7 +11,10 @@ class PageQuiz extends ConsumerWidget {
   const PageQuiz({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref)  {
+    final service = FirestoreService();
+    // final furnitureList = await service.readFurnitureList();
+
     // watch, listenはbuild(ref)直下で使う
     final index = ref.watch(indexNotifierProvider);
 
@@ -38,7 +42,9 @@ class PageQuiz extends ConsumerWidget {
           builder: (_) => QuizEndDialog(),
         );
         // ダイアログを閉じた後
-        debugPrint(isRetry.toString());
+        if(isRetry) {
+          // service.update();
+        }
       },
     );
     final nextButton = ButtonL(
