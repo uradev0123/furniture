@@ -17,15 +17,15 @@ class PageQuiz extends ConsumerWidget {
     final index = ref.watch(indexNotifierProvider);
     final isQuestion = ref.watch(isQuestionNotifierProvider);
 
-    final details = ref.watch(detailsNotifierProvider);
-    final detailsText = TestText(details);
-
     final listState = ref.watch(listNotifierProvider);
     final list = listState.when(
-        data: (d) => d,
-        error: (e, s) => null,
-        loading: () => null,
+      data: (d) => d,
+      error: (e, s) => null,
+      loading: () => null,
     );
+
+    final details = ref.watch(detailsNotifierProvider);
+    final detailsText = TestText(details);
 
     final imageState = ref.watch(imageNotifierProvider);
     final image = imageState.when(
@@ -55,7 +55,7 @@ class PageQuiz extends ConsumerWidget {
       detailsNotifier.updateState(list!.elementAt(index));
       // 画像を変更
       final imageNotifier = ref.read(imageNotifierProvider.notifier);
-      imageNotifier.updateState(list!.elementAt(index).imageUrl);
+      imageNotifier.updateState(list.elementAt(index).imageUrl);
       // 画面状態を問題中に変更
       final isQuestionNotifier = ref.read(isQuestionNotifierProvider.notifier);
       isQuestionNotifier.updateState(true);
