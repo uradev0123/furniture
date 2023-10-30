@@ -29,9 +29,9 @@ class PageQuiz extends ConsumerWidget {
 
     final imageState = ref.watch(imageNotifierProvider);
     final image = imageState.when(
-        data: (d) => d,
-        error: (e, s) => Images.error,
-        loading: () => Images.loading,
+        data: (d) => ImageL(d),
+        error: (e, s) => ImageL(Images.error),
+        loading: () => ImageL(Images.loading),
     );
 
     void showAnswer() {
