@@ -17,4 +17,8 @@ class IndexNotifier extends _$IndexNotifier {
     // データを上書き
     state = newState;
   }
+
+  void resetState() {
+    state = 0;
+  }
 }

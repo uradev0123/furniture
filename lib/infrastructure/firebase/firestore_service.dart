@@ -6,13 +6,6 @@ import 'package:furniture/infrastructure/firebase/data_path.dart';
 
 class FirestoreService {
   final db = FirebaseFirestore.instance;
-  
-  Future<void> read() async {
-    final doc = await db.collection(Collection.songs).doc('S07').get();
-
-    final song = doc.data().toString();
-    debugPrint(song);
-  }
 
   Future<void> update() async {
     await db.collection(Collection.songs).doc('S09').update(
@@ -22,8 +15,7 @@ class FirestoreService {
     );
   }
 
-
-  // 家具データをFurnutureクラスへ変換
+  // 家具データをFurnitureクラスへ変換
   Future<Furniture> convertDataToFurniture(QueryDocumentSnapshot<Map<String, dynamic>> doc) async {
 
     final preFurniture = PreFurniture.fromJson(doc.data());
@@ -48,7 +40,6 @@ class FirestoreService {
       memo: preFurniture.memo,
     );
 
-    debugPrint('Debug5\n$furniture');
     return furniture;
   }
 

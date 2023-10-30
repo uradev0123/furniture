@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:furniture/domain/types/types.dart';
+import 'package:furniture/infrastructure/firebase/storage_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'image.g.dart';
 
@@ -7,14 +7,21 @@ part 'image.g.dart';
 class ImageNotifier extends _$ImageNotifier {
   @override
   Future<Image> build() async {
-    const sec3 = Duration(seconds: 3);
-    await Future.delayed(sec3);
+    // 3秒まつ
+    const sec1 = Duration(seconds: 1);
+    await Future.delayed(sec1);
+
     return Image.network('https://user0514.cdnw.net/shared/img/thumb/shikunDJI_0096-NR233_TP_V.jpg');
   }
 
-  void updateState(Furniture f){
-    final url = f.imageUrl;
+  Future<void> updateState(String path) async {
+    state = const AsyncValue.loading();
 
-    // ストレージから画像を取得する
+    // 画像を取得
+    final service = StorageService();
+    final image = await service.getImage(path);
+
+    // データを上書き
+    state = AsyncValue.data(image);
   }
 }
