@@ -16,6 +16,7 @@ class PageQuiz extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref)  {
 
+    // ----------------------------------- ステイト -----------------------------------
     final index = ref.watch(indexNotifierProvider);
     final isQuestion = ref.watch(isQuestionNotifierProvider);
 
@@ -36,25 +37,14 @@ class PageQuiz extends ConsumerWidget {
         loading: () => ImageL(Images.loading),
     );
 
-    void restart(){
-      // インデックスを0に戻す
-      final indexNotifier = ref.read(indexNotifierProvider.notifier);
-      indexNotifier.resetState();
-      // 問題を更新
-      final updateQuestion = UpdateQuestionUsecase(ref: ref);
-      updateQuestion.updateQuestion(list!.elementAt(index));
-    }
-
-    void finish() async {
-      final isRetry = await showDialog(
-        context: context,
-        builder: (_) => QuizEndDialog(),
-      );
-      // ダイアログを閉じた後
-      if(isRetry) {
-        restart();
-      }
-    }
+    // ----------------------------------- ボタン -----------------------------------
+    final updateButton = ButtonL(
+        text: '更新',
+        onPressed: () {
+          final usecase = UpdateQuestionUsecase(ref: ref);
+          usecase.updateQuestion(list!.elementAt(index));
+        }
+    );
 
     final answerButton = ButtonL(
       text: '答え',
@@ -64,12 +54,22 @@ class PageQuiz extends ConsumerWidget {
         showAnswer.showAnswer();
       },
     );
+
     final nextButton = ButtonL(
       text: '次へ',
-      onPressed: () {
+      onPressed: () async {
         final checkLast = CheckLastUsecase();
-        if(checkLast.checkLast(index, list!)){
-          finish();
+        if(checkLast.checkLast(index, list!)) {
+          final isRetry = await showDialog(
+            context: context,
+            builder: (_) => const QuizEndDialog(),
+          );
+          // ダイアログを閉じた後
+          if(isRetry) {
+            // restart();
+            final usecase = RestartUsecase(ref: ref);
+            usecase.restart(list);
+          }
         }
         else {
           final nextQuestion = NextQuestionUsecase(ref: ref);
@@ -78,9 +78,11 @@ class PageQuiz extends ConsumerWidget {
       },
     );
 
+    // ----------------------------------- ページ -----------------------------------
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
+        updateButton,
         image,
         isQuestion ? TestText('この家具は何でしょう？') : detailsText,
         isQuestion ? answerButton : nextButton,
