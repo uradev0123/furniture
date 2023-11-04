@@ -9,14 +9,23 @@ import 'package:furniture/presentation/theme/images.dart';
 import 'package:furniture/domain/types/types.dart';
 import 'package:furniture/application/usecase/quiz/quiz_usecase.dart';
 
+
+
 @RoutePage()
-class PageQuizSetting extends ConsumerWidget {
-  PageQuizSetting({super.key});
+class PageQuizSetting extends ConsumerStatefulWidget {
+  const PageQuizSetting({super.key});
+
+  @override
+  PageQuizSettingState createState() => PageQuizSettingState();
+
+}
+
+class PageQuizSettingState extends ConsumerState<PageQuizSetting>{
 
   int? selectedRadioId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref)  {
+  Widget build(BuildContext context)  { // ConsumerStateの場合,refは引数で取らないが持っている
 
     // ----------------------------------- ステイト -----------------------------------
     final index = ref.watch(indexNotifierProvider);
@@ -50,9 +59,9 @@ class PageQuizSetting extends ConsumerWidget {
 
     // ラジオボタンが押されたときの関数
     void onChanged(int? id) {
-      // setState(() {
-      //   selectedRadioId = id;
-      // });
+      setState(() {
+        selectedRadioId = id;
+      });
     }
 
     // ---------------テスト-------------------
@@ -80,23 +89,33 @@ class PageQuizSetting extends ConsumerWidget {
       body: Center(
         child: Column(
           children: [
-            RadioListTile(
-              groupValue: selectedRadioId,
-              title: const Text('10'),
-              value: 10,
-              onChanged: onChanged,
-            ),
-            RadioListTile(
-              groupValue: selectedRadioId,
-              title: const Text('30'),
-              value: 30,
-              onChanged: onChanged,
-            ),
-            RadioListTile(
-              groupValue: selectedRadioId,
-              title: const Text('50'),
-              value: 50,
-              onChanged: onChanged,
+            Row(
+              children: [
+                Expanded(
+                  child: RadioListTile(
+                    groupValue: selectedRadioId,
+                    title: const Text('10'),
+                    value: 10,
+                    onChanged: onChanged,
+                  ),
+                ),
+                Expanded(
+                  child: RadioListTile(
+                    groupValue: selectedRadioId,
+                    title: const Text('30'),
+                    value: 30,
+                    onChanged: onChanged,
+                  ),
+                ),
+                Expanded(
+                  child: RadioListTile(
+                    groupValue: selectedRadioId,
+                    title: const Text('50'),
+                    value: 50,
+                    onChanged: onChanged,
+                  ),
+                ),
+              ],
             ),
             ElevatedButton(
                 onPressed: () {
@@ -108,5 +127,7 @@ class PageQuizSetting extends ConsumerWidget {
         ),
       ),
     );
+
+
   }
 }
