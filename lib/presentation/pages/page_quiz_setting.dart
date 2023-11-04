@@ -10,8 +10,10 @@ import 'package:furniture/domain/types/types.dart';
 import 'package:furniture/application/usecase/quiz/quiz_usecase.dart';
 
 @RoutePage()
-class PageQuiz extends ConsumerWidget {
-  const PageQuiz({super.key});
+class PageQuizSetting extends ConsumerWidget {
+  PageQuizSetting({super.key});
+
+  int? selectedRadioId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref)  {
@@ -32,51 +34,26 @@ class PageQuiz extends ConsumerWidget {
 
     final imageState = ref.watch(imageNotifierProvider);
     final image = imageState.when(
-        data: (d) => ImageL(d),
-        error: (e, s) => ImageL(Images.error),
-        loading: () => ImageL(Images.loading),
+      data: (d) => ImageL(d),
+      error: (e, s) => ImageL(Images.error),
+      loading: () => ImageL(Images.loading),
     );
 
     // ----------------------------------- ボタン -----------------------------------
-    final updateButton = ButtonL(
-        text: '更新',
+    final decideButton = ButtonL(
+        text: '決定',
         onPressed: () {
-          final usecase = UpdateQuestionUsecase(ref: ref);
-          usecase.updateQuestion(list!.elementAt(index));
+          // final usecase = UpdateQuestionUsecase(ref: ref);
+          // usecase.updateQuestion(list!.elementAt(index));
         }
     );
 
-    final answerButton = ButtonL(
-      text: '答え',
-      onPressed: () {
-        final notifier = ref.read(isQuestionNotifierProvider.notifier);
-        final showAnswer = ShowAnswerUsecase(notifier: notifier);
-        showAnswer.showAnswer();
-      },
-    );
-
-    final nextButton = ButtonL(
-      text: '次へ',
-      onPressed: () async {
-        final checkLast = CheckLastUsecase();
-        if(checkLast.checkLast(index, list!)) {
-          final isRetry = await showDialog(
-            context: context,
-            builder: (_) => const QuizEndDialog(),
-          );
-          // ダイアログを閉じた後
-          if(isRetry) {
-            // restart();
-            final usecase = RestartUsecase(ref: ref);
-            usecase.restart(list);
-          }
-        }
-        else {
-          final nextQuestion = NextQuestionUsecase(ref: ref);
-          nextQuestion.nextQuestion(list);
-        }
-      },
-    );
+    // ラジオボタンが押されたときの関数
+    void onChanged(int? id) {
+      // setState(() {
+      //   selectedRadioId = id;
+      // });
+    }
 
     // ---------------テスト-------------------
     final numDropdownButton = DropdownButton(
@@ -96,20 +73,40 @@ class PageQuiz extends ConsumerWidget {
         ],
         onChanged: (int? num) {}
     );
-
-
     // ---------------テスト-------------------
 
     // ----------------------------------- ページ -----------------------------------
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-
-        updateButton,
-        image,
-        isQuestion ? TestText('この家具は何でしょう？') : detailsText,
-        isQuestion ? answerButton : nextButton,
-      ],
+    return Scaffold(
+      body: Center(
+        child: Column(
+          children: [
+            RadioListTile(
+              groupValue: selectedRadioId,
+              title: const Text('10'),
+              value: 10,
+              onChanged: onChanged,
+            ),
+            RadioListTile(
+              groupValue: selectedRadioId,
+              title: const Text('30'),
+              value: 30,
+              onChanged: onChanged,
+            ),
+            RadioListTile(
+              groupValue: selectedRadioId,
+              title: const Text('50'),
+              value: 50,
+              onChanged: onChanged,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  debugPrint('$selectedRadioId');
+                },
+                child: const Text('決定')
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

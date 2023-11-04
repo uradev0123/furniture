@@ -7,7 +7,7 @@ part of 'is_question.dart';
 // **************************************************************************
 
 String _$isQuestionNotifierHash() =>
-    r'2d439608d435b034176db187508fabdb3df2bac0';
+    r'6e68480ba55e2a8522c0b670bc9c717f6f2bdc0e';
 
 /// See also [IsQuestionNotifier].
 @ProviderFor(IsQuestionNotifier)

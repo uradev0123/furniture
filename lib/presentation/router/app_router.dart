@@ -28,6 +28,10 @@ class AppRouter extends $AppRouter {
           path: 'quiz',
           page: RouteQuiz.page,
         ),
+        AutoRoute(
+          path: 'quiz/setting',
+            page: RouteQuizSetting.page,
+        ),
       ],
     ),
   ];
