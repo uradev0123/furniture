@@ -10,7 +10,7 @@ class PageRoot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AutoTabsRouter(
-      routes: [
+      routes: const [
         RouteFurnitureList(),
         RouteDesignerList(),
         RouteBrandList(),

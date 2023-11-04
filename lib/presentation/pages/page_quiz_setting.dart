@@ -17,7 +17,6 @@ class PageQuizSetting extends ConsumerStatefulWidget {
 
   @override
   PageQuizSettingState createState() => PageQuizSettingState();
-
 }
 
 class PageQuizSettingState extends ConsumerState<PageQuizSetting>{
@@ -58,7 +57,7 @@ class PageQuizSettingState extends ConsumerState<PageQuizSetting>{
     );
 
     // ラジオボタンが押されたときの関数
-    void onChanged(int? id) {
+    void onChanged(dynamic id) {
       setState(() {
         selectedRadioId = id;
       });
@@ -89,36 +88,15 @@ class PageQuizSettingState extends ConsumerState<PageQuizSetting>{
       body: Center(
         child: Column(
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: RadioListTile(
-                    groupValue: selectedRadioId,
-                    title: const Text('10'),
-                    value: 10,
-                    onChanged: onChanged,
-                  ),
-                ),
-                Expanded(
-                  child: RadioListTile(
-                    groupValue: selectedRadioId,
-                    title: const Text('30'),
-                    value: 30,
-                    onChanged: onChanged,
-                  ),
-                ),
-                Expanded(
-                  child: RadioListTile(
-                    groupValue: selectedRadioId,
-                    title: const Text('50'),
-                    value: 50,
-                    onChanged: onChanged,
-                  ),
-                ),
-              ],
+            RadioButtonRow(
+                id: selectedRadioId,
+                onChanged: onChanged,
+                values: const [10, 30, 50],
             ),
             ElevatedButton(
                 onPressed: () {
+                  // nullの場合分けも必要
+                  // もしくはラジオボタンのデフォルトを10問にする
                   debugPrint('$selectedRadioId');
                 },
                 child: const Text('決定')
@@ -127,7 +105,5 @@ class PageQuizSettingState extends ConsumerState<PageQuizSetting>{
         ),
       ),
     );
-
-
   }
 }
