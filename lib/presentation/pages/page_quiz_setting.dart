@@ -9,6 +9,18 @@ import 'package:furniture/presentation/theme/images.dart';
 import 'package:furniture/domain/types/types.dart';
 import 'package:furniture/application/usecase/quiz/quiz_usecase.dart';
 
+enum GENRE {
+  all('全て'),
+  designer('デザイナー'),
+  brand('ブランド'),
+  culture('文化');
+
+  final String displayName;
+  const GENRE(this.displayName);
+
+  @override
+  String toString() => displayName;
+}
 
 
 @RoutePage()
@@ -21,7 +33,8 @@ class PageQuizSetting extends ConsumerStatefulWidget {
 
 class PageQuizSettingState extends ConsumerState<PageQuizSetting>{
 
-  int? selectedRadioId;
+  int? numRadioId;
+  GENRE? genreRadioId;
 
   @override
   Widget build(BuildContext context)  { // ConsumerStateの場合,refは引数で取らないが持っている
@@ -56,10 +69,14 @@ class PageQuizSettingState extends ConsumerState<PageQuizSetting>{
         }
     );
 
-    // ラジオボタンが押されたときの関数
-    void onChanged(dynamic id) {
+    void onChangedNumRadio(dynamic id) {
       setState(() {
-        selectedRadioId = id;
+        numRadioId = id;
+      });
+    }
+    void onChangedGenreRadio(dynamic id) {
+      setState(() {
+        genreRadioId = id;
       });
     }
 
@@ -88,18 +105,26 @@ class PageQuizSettingState extends ConsumerState<PageQuizSetting>{
       body: Center(
         child: Column(
           children: [
+            const Text('問題数'),
             RadioButtonRow(
-                id: selectedRadioId,
-                onChanged: onChanged,
+                id: numRadioId,
+                onChanged: onChangedNumRadio,
                 values: const [10, 30, 50],
             ),
-            ElevatedButton(
+            const Text('絞り込み'),
+            RadioButtonColumn(
+              id: genreRadioId,
+              onChanged: onChangedGenreRadio,
+              values: GENRE.values,
+            ),
+            ButtonL(
                 onPressed: () {
                   // nullの場合分けも必要
                   // もしくはラジオボタンのデフォルトを10問にする
-                  debugPrint('$selectedRadioId');
+                  debugPrint('$numRadioId');
+                  debugPrint('$genreRadioId');
                 },
-                child: const Text('決定')
+                text: '決定',
             ),
           ],
         ),
