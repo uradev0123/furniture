@@ -7,14 +7,6 @@ import 'package:furniture/infrastructure/firebase/data_path.dart';
 class FirestoreService {
   final db = FirebaseFirestore.instance;
 
-  Future<void> update() async {
-    await db.collection(Collection.songs).doc('S09').update(
-      {
-        'genre': 'コック',
-      }
-    );
-  }
-
   // 家具データをFurnitureクラスへ変換
   Future<Furniture> convertDataToFurniture(QueryDocumentSnapshot<Map<String, dynamic>> doc) async {
 
@@ -58,6 +50,28 @@ class FirestoreService {
     );
 
     return furnitureList;
+  }
+
+  // デザイナー一覧を取得
+  Future<List<Designer>> readDesignerList() async {
+    final snapshot = await db.collection(Collection.designers).get();
+
+    // DBデータ →　List<Designer>
+    List<Designer> list = snapshot.docs.map(
+            (doc) => Designer.designerFromMap(doc.data())).toList();
+
+    return list;
+  }
+
+  // ブランド一覧を取得
+  Future<List<Brand>> readBrandList() async {
+    final snapshot = await db.collection(Collection.brands).get();
+
+    // DBデータ →　List<Brand>
+    List<Brand> list = snapshot.docs.map(
+            (doc) => Brand.fromJson(doc.data())).toList();
+
+    return list;
   }
 }
 
