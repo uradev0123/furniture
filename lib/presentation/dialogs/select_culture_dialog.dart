@@ -20,11 +20,13 @@ class SelectDialog<T> extends StatefulWidget {
   const SelectDialog({
     required this.checkIds,
     required this.values,
+    required this.decideButtonOnPush,
     super.key
   });
 
   final List<T> checkIds;
   final List<T> values;
+  final void Function() decideButtonOnPush;
 
   @override
   State<SelectDialog<T>> createState() => _SelectDialogState<T>();
@@ -61,7 +63,13 @@ class _SelectDialogState<T> extends State<SelectDialog<T>> {
           ),
           Flexible(
             flex: 1,
-            child: ButtonL(text: '決定', onPressed: () {debugPrint('push');}),
+            child: ButtonL(
+              text: '決定',
+              onPressed: (){
+                Navigator.pop(context, true); // 絞り込み結果を送る
+                widget.decideButtonOnPush();
+              }
+            ),
           ),
         ],
       ),
