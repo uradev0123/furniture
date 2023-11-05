@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CheckBoxListView<T> extends StatelessWidget {
+class CheckBoxListView extends StatelessWidget {
   const CheckBoxListView({
     required this.ids,
     required this.onChanged,
@@ -8,17 +8,17 @@ class CheckBoxListView<T> extends StatelessWidget {
     super.key
   });
 
-  final List<T> ids;
-  final List<T> values;
-  final void Function(T id) onChanged;
+  final List<String> ids;
+  final List<String> values;
+  final void Function(String id) onChanged;
 
   @override
   Widget build(BuildContext context) {
     final checkTiles = values.map((e) {
       return CheckboxListTile(
-        title: Text('$e'),
+        title: Text(e),
         value: ids.contains(e),
-        onChanged: (c) => onChanged(e),
+        onChanged: (check) => onChanged(e),
       );
     }).toList();
 
