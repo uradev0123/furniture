@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture/application/state/quiz/state.dart';
 import 'package:furniture/application/usecase/quiz/check_last.dart';
+import 'package:furniture/infrastructure/firebase/firestore_service.dart';
 import 'package:furniture/presentation/router/app_router.gr.dart';
 import 'package:furniture/presentation/widgets/my_widgets.dart';
 import 'package:furniture/presentation/dialogs/my_dialogs.dart';
@@ -41,6 +42,9 @@ class PageQuizSettingState extends ConsumerState<PageQuizSetting>{
   @override
   Widget build(BuildContext context)  { // ConsumerStateの場合,refは引数で取らないが持っている
 
+    final selectList = ref.watch(selectListNotifierProvider);
+
+    // --------------------------- ラジオボタン変更メソッド ------------------------
     void onChangedNumRadio(dynamic id) {
       setState(() {
         numRadioId = id;
@@ -51,70 +55,28 @@ class PageQuizSettingState extends ConsumerState<PageQuizSetting>{
         genreRadioId = id;
       });
     }
-    
-    void pushQuizPage() {
-      context.navigateTo(const RouteQuiz());
-    }
 
-    // DBから取得する
-    List<Designer> getDesigners(){
-      List<Designer> list = [
-        Designer(
-            enName: 'enName',
-            jaName: 'jaName',
-            country: 'country',
-            culture: 'culture',
-            birthday: DateTime.now(),
-            faceUrl: 'faceUrl',
-            memo: 'memo'
-        ),
-      ];
-      return list;
-    }
-    // DBから取得する
-    List<Brand> getBrands(){
-      List<Brand> list = [
-        const Brand(
-            enName: 'enName',
-            jaName: 'jaName',
-            country: 'country',
-            foundedYear: 1900
-        ),
-      ];
-      return list;
-    }
+    // --------------------------- メソッド ------------------------
+    // void pushQuizPage() {
+    //   context.navigateTo(const RouteQuiz());
+    // }
 
-    List<String> getDialogValues(GENRE genre) {
-      final list = switch(genre) {
-        GENRE.all => ['null'],
-        GENRE.culture => CULTURE.values.map((e) => e.toString()).toList(),
-        GENRE.designer => getDesigners().map((e) => e.jaName).toList(),
-        GENRE.brand => getBrands().map((e) => e.jaName).toList(),
-      };
-      
-      return list;
-    }
-
+    // --------------------------- ボタン ------------------------
     final decideButton = ButtonL(
       text: '決定',
       onPressed: () async {
-        // nullの場合分けも必要
-        // もしくはラジオボタンのデフォルトを10問にする
+        final noti = ref.watch(selectListNotifierProvider.notifier);
+        noti.updateState(genreRadioId);
+
         final query = await showDialog(
             context: context,
-            builder: (_) =>
-                QuizSelectDialog(
-                  checkIds: querySelectedIds,
-                  values: getDialogValues(genreRadioId!),
-                  decideButtonOnPush: pushQuizPage,
-                )
+            builder: (_) => QuizSelectDialog(checkIds: querySelectedIds),
         );
 
         if(query != null) {
           // queryを使ってDBからデータを取得
         }
-      },
-
+      }
     );
 
     // ----------------------------------- ページ -----------------------------------

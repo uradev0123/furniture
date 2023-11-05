@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:furniture/application/state/quiz/select_list/select_list.dart';
 import 'package:furniture/presentation/widgets/my_widgets.dart';
 import 'package:furniture/domain/types/types.dart';
 
@@ -16,26 +17,24 @@ enum CULTURE {
   String toString() => displayName;
 }
 
-class QuizSelectDialog extends StatefulWidget {
+class QuizSelectDialog extends ConsumerStatefulWidget {
   const QuizSelectDialog({
     required this.checkIds,
-    required this.values,
-    required this.decideButtonOnPush,
     super.key
   });
 
   final List<String> checkIds;
-  final List<String> values;
-  final void Function() decideButtonOnPush;
 
   @override
-  State<QuizSelectDialog> createState() => _QuizSelectDialogState();
+  QuizSelectDialogState createState() => QuizSelectDialogState();
 }
 
-class _QuizSelectDialogState extends State<QuizSelectDialog> {
+class QuizSelectDialogState extends ConsumerState<QuizSelectDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final selectList = ref.watch(selectListNotifierProvider);
+
     void onChanged(e) {
       setState(() {
         if (widget.checkIds.contains(e)) {
@@ -57,7 +56,11 @@ class _QuizSelectDialogState extends State<QuizSelectDialog> {
               child: CheckBoxListView(
                 ids: widget.checkIds,
                 onChanged: onChanged,
-                values: widget.values,
+                values: selectList.when(
+                    data: (d) => d,
+                    error: (e, s) => ['error'],
+                    loading: () => ['loading']
+                ),
               )
           ),
           Flexible(
