@@ -35,39 +35,10 @@ class PageQuizSettingState extends ConsumerState<PageQuizSetting>{
 
   int? numRadioId;
   GENRE? genreRadioId;
+  List<CULTURE> cultureSelectedIds = [];
 
   @override
   Widget build(BuildContext context)  { // ConsumerStateの場合,refは引数で取らないが持っている
-
-    // ----------------------------------- ステイト -----------------------------------
-    final index = ref.watch(indexNotifierProvider);
-    final isQuestion = ref.watch(isQuestionNotifierProvider);
-
-    final listState = ref.watch(listNotifierProvider);
-    final list = listState.when(
-      data: (d) => d,
-      error: (e, s) => null,
-      loading: () => null,
-    );
-
-    final details = ref.watch(detailsNotifierProvider);
-    final detailsText = TestText(details);
-
-    final imageState = ref.watch(imageNotifierProvider);
-    final image = imageState.when(
-      data: (d) => ImageL(d),
-      error: (e, s) => ImageL(Images.error),
-      loading: () => ImageL(Images.loading),
-    );
-
-    // ----------------------------------- ボタン -----------------------------------
-    final decideButton = ButtonL(
-        text: '決定',
-        onPressed: () {
-          // final usecase = UpdateQuestionUsecase(ref: ref);
-          // usecase.updateQuestion(list!.elementAt(index));
-        }
-    );
 
     void onChangedNumRadio(dynamic id) {
       setState(() {
@@ -80,25 +51,22 @@ class PageQuizSettingState extends ConsumerState<PageQuizSetting>{
       });
     }
 
-    // ---------------テスト-------------------
-    final numDropdownButton = DropdownButton(
-        items: const [
-          DropdownMenuItem(
-            value: 10,
-            child: Text('10'),
+    final decideButton = ButtonL(
+      onPressed: () {
+        // nullの場合分けも必要
+        // もしくはラジオボタンのデフォルトを10問にする
+        debugPrint('$numRadioId');
+        debugPrint('$genreRadioId');
+        showDialog(
+          context: context,
+          builder: (_) => SelectDialog<CULTURE>(
+            checkIds: cultureSelectedIds,
+            values: CULTURE.values,
           ),
-          DropdownMenuItem(
-            value: 30,
-            child: Text('30'),
-          ),
-          DropdownMenuItem(
-            value: 50,
-            child: Text('50'),
-          ),
-        ],
-        onChanged: (int? num) {}
+        );
+      },
+      text: '決定',
     );
-    // ---------------テスト-------------------
 
     // ----------------------------------- ページ -----------------------------------
     return Scaffold(
@@ -117,15 +85,7 @@ class PageQuizSettingState extends ConsumerState<PageQuizSetting>{
               onChanged: onChangedGenreRadio,
               values: GENRE.values,
             ),
-            ButtonL(
-                onPressed: () {
-                  // nullの場合分けも必要
-                  // もしくはラジオボタンのデフォルトを10問にする
-                  debugPrint('$numRadioId');
-                  debugPrint('$genreRadioId');
-                },
-                text: '決定',
-            ),
+            decideButton,
           ],
         ),
       ),
