@@ -14,7 +14,7 @@ class PageRoot extends StatelessWidget {
         RouteFurnitureList(),
         RouteDesignerList(),
         RouteBrandList(),
-        RouteQuiz(),
+        // RouteQuiz(),
         RouteQuizSetting(),
       ],
       builder: (context, child) {
@@ -28,7 +28,7 @@ class PageRoot extends StatelessWidget {
               NavigationDestination(icon: Icon(Icons.person), label: 'designer'),
               NavigationDestination(icon: Icon(Icons.apartment), label: 'brand'),
               NavigationDestination(icon: Icon(Icons.quiz), label: 'setting'),
-              NavigationDestination(icon: Icon(Icons.quiz), label: 'quiz'),
+              // NavigationDestination(icon: Icon(Icons.quiz), label: 'quiz'),
             ],
             onDestinationSelected: tabsRouter.setActiveIndex,
           ),
