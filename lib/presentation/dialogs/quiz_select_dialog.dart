@@ -16,23 +16,23 @@ enum CULTURE {
   String toString() => displayName;
 }
 
-class SelectDialog<T> extends StatefulWidget {
-  const SelectDialog({
+class QuizSelectDialog extends StatefulWidget {
+  const QuizSelectDialog({
     required this.checkIds,
     required this.values,
     required this.decideButtonOnPush,
     super.key
   });
 
-  final List<T> checkIds;
-  final List<T> values;
+  final List<String> checkIds;
+  final List<String> values;
   final void Function() decideButtonOnPush;
 
   @override
-  State<SelectDialog<T>> createState() => _SelectDialogState<T>();
+  State<QuizSelectDialog> createState() => _QuizSelectDialogState();
 }
 
-class _SelectDialogState<T> extends State<SelectDialog<T>> {
+class _QuizSelectDialogState extends State<QuizSelectDialog> {
 
   @override
   Widget build(BuildContext context) {
@@ -49,13 +49,12 @@ class _SelectDialogState<T> extends State<SelectDialog<T>> {
       debugPrint('${widget.checkIds}');
     }
 
-
     return Dialog(
       child: Column(
         children: [
           Flexible(
               flex: 9,
-              child: CheckBoxListView<T>(
+              child: CheckBoxListView(
                 ids: widget.checkIds,
                 onChanged: onChanged,
                 values: widget.values,
@@ -63,12 +62,25 @@ class _SelectDialogState<T> extends State<SelectDialog<T>> {
           ),
           Flexible(
             flex: 1,
-            child: ButtonL(
-              text: '決定',
-              onPressed: (){
-                Navigator.pop(context, true); // 絞り込み結果を送る
-                widget.decideButtonOnPush();
-              }
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ButtonL(
+                    text: '決定',
+                    onPressed: (){
+                      Navigator.pop(context, true); // 絞り込み結果を送る
+                    }
+                  ),
+                  ButtonL(
+                      text: '戻る',
+                      onPressed: (){
+                        Navigator.pop(context);
+                      }
+                  ),
+                ],
+              ),
             ),
           ),
         ],
