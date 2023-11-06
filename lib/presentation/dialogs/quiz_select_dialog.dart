@@ -9,19 +9,6 @@ import 'package:furniture/presentation/router/app_router.gr.dart';
 import 'package:furniture/presentation/widgets/my_widgets.dart';
 import 'package:furniture/domain/types/types.dart';
 
-enum CULTURE {
-  scandinavian('北欧'),
-  bauhouse('バウハウス'),
-  midcentury('ミッドセンチュリー'),
-  other('その他');
-
-  const CULTURE(this.displayName);
-  final String displayName;
-
-  @override
-  String toString() => displayName;
-}
-
 class QuizSelectDialog extends ConsumerStatefulWidget {
   const QuizSelectDialog({
     required this.genre,

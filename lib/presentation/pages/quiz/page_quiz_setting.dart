@@ -10,22 +10,7 @@ import 'package:furniture/presentation/dialogs/my_dialogs.dart';
 import 'package:furniture/presentation/theme/images.dart';
 import 'package:furniture/domain/types/types.dart';
 import 'package:furniture/application/usecase/quiz/quiz_usecase.dart';
-
 import '../../../infrastructure/firebase/data_path.dart';
-
-enum GENRE {
-  all('全て'),
-  designer('デザイナー'),
-  brand('ブランド'),
-  culture('文化');
-
-  final String displayName;
-  const GENRE(this.displayName);
-
-  @override
-  String toString() => displayName;
-}
-
 
 @RoutePage()
 class PageQuizSetting extends ConsumerStatefulWidget {
@@ -39,12 +24,12 @@ class PageQuizSettingState extends ConsumerState<PageQuizSetting>{
 
   int numRadioId = 10;  // ラジオボタンのデフォルト選択
   GENRE genreRadioId = GENRE.all;
-  List<String> querySelectedIds = [];
+  // List<String> querySelectedIds = [];
 
   @override
   Widget build(BuildContext context)  { // ConsumerStateの場合,refは引数で取らないが持っている
 
-    final selectList = ref.watch(selectListNotifierProvider);
+    // final selectList = ref.watch(selectListNotifierProvider);
 
     // --------------------------- メソッド ------------------------
     void onChangedNumRadio(dynamic id) {
@@ -57,10 +42,6 @@ class PageQuizSettingState extends ConsumerState<PageQuizSetting>{
         genreRadioId = id;
       });
     }
-
-    // void pushQuizPage() {
-    //   context.navigateTo(const RouteQuiz());
-    // }
     String getProperty(GENRE genre) {
       final property = switch(genre) {
         GENRE.all => 'all',
