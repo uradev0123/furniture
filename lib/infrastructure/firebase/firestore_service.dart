@@ -36,19 +36,27 @@ class FirestoreService {
   }
 
   // 家具一覧を取得
-  Future<List<Furniture>> readFurnitureList() async {
+  Future<List<Furniture>> readFurnitureList(DbQuery? query) async {
+    debugPrint('enter readFurnitureList()');
     // DBから家具一覧のデータを取得
-    final snapshot = await db.collection(Collection.furniture).get();
+    QuerySnapshot<Map<String, dynamic>> snapshot;
+    if(query == null){
+      debugPrint('query is null');
+      snapshot = await db.collection(Collection.furniture).get();
+    } else {
+      debugPrint('query is not null');
+      snapshot = await db.collection(Collection.furniture)
+        .where(query.property, isEqualTo: query.target).limit(query.limit).get();
+    }
 
     // DBデータ → List<Furniture>
     List<Furniture> furnitureList = [];
-    snapshot.docs.forEach( // forEachではなくmapの方がきれいだが、戻り値の型がList<Future<Furniture>>になるので使えなかった
-        (doc) async {
-          final f = await convertDataToFurniture(doc);
-          furnitureList.add(f);
-        }
-    );
+    for(QueryDocumentSnapshot<Map<String, dynamic>> doc in snapshot.docs) {
+      final f = await convertDataToFurniture(doc);
+      furnitureList.add(f);
+    }
 
+    debugPrint('leave readFurnitureList()');
     return furnitureList;
   }
 
@@ -72,6 +80,23 @@ class FirestoreService {
             (doc) => Brand.fromJson(doc.data())).toList();
 
     return list;
+  }
+  
+  // デザイナーIDを検索
+  Future<String> searchDesignerId(String jaName) async {
+    final snapshot = await db.collection(Collection.designers)
+        .where(DesignerProperty.jaName, isEqualTo: jaName).limit(1).get();
+    final id = snapshot.docs.first.id;
+
+    return id;
+  }
+  // ブランドIDを検索
+  Future<String> searchBrandId(String jaName) async {
+    final snapshot = await db.collection(Collection.brands)
+        .where(DesignerProperty.jaName, isEqualTo: jaName).limit(1).get();
+    final id = snapshot.docs.first.id;
+
+    return id;
   }
 }
 

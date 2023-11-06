@@ -16,9 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$DbQuery {
-  Collection get collection => throw _privateConstructorUsedError;
-  FurnitureProperty get property => throw _privateConstructorUsedError;
-  String get search => throw _privateConstructorUsedError;
+  String get collection => throw _privateConstructorUsedError;
+  String get property => throw _privateConstructorUsedError;
+  String get target => throw _privateConstructorUsedError;
   int get limit => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,11 +30,7 @@ abstract class $DbQueryCopyWith<$Res> {
   factory $DbQueryCopyWith(DbQuery value, $Res Function(DbQuery) then) =
       _$DbQueryCopyWithImpl<$Res, DbQuery>;
   @useResult
-  $Res call(
-      {Collection collection,
-      FurnitureProperty property,
-      String search,
-      int limit});
+  $Res call({String collection, String property, String target, int limit});
 }
 
 /// @nodoc
@@ -52,21 +48,21 @@ class _$DbQueryCopyWithImpl<$Res, $Val extends DbQuery>
   $Res call({
     Object? collection = null,
     Object? property = null,
-    Object? search = null,
+    Object? target = null,
     Object? limit = null,
   }) {
     return _then(_value.copyWith(
       collection: null == collection
           ? _value.collection
           : collection // ignore: cast_nullable_to_non_nullable
-              as Collection,
+              as String,
       property: null == property
           ? _value.property
           : property // ignore: cast_nullable_to_non_nullable
-              as FurnitureProperty,
-      search: null == search
-          ? _value.search
-          : search // ignore: cast_nullable_to_non_nullable
+              as String,
+      target: null == target
+          ? _value.target
+          : target // ignore: cast_nullable_to_non_nullable
               as String,
       limit: null == limit
           ? _value.limit
@@ -83,11 +79,7 @@ abstract class _$$DbQueryImplCopyWith<$Res> implements $DbQueryCopyWith<$Res> {
       __$$DbQueryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Collection collection,
-      FurnitureProperty property,
-      String search,
-      int limit});
+  $Res call({String collection, String property, String target, int limit});
 }
 
 /// @nodoc
@@ -103,21 +95,21 @@ class __$$DbQueryImplCopyWithImpl<$Res>
   $Res call({
     Object? collection = null,
     Object? property = null,
-    Object? search = null,
+    Object? target = null,
     Object? limit = null,
   }) {
     return _then(_$DbQueryImpl(
       collection: null == collection
           ? _value.collection
           : collection // ignore: cast_nullable_to_non_nullable
-              as Collection,
+              as String,
       property: null == property
           ? _value.property
           : property // ignore: cast_nullable_to_non_nullable
-              as FurnitureProperty,
-      search: null == search
-          ? _value.search
-          : search // ignore: cast_nullable_to_non_nullable
+              as String,
+      target: null == target
+          ? _value.target
+          : target // ignore: cast_nullable_to_non_nullable
               as String,
       limit: null == limit
           ? _value.limit
@@ -133,21 +125,21 @@ class _$DbQueryImpl with DiagnosticableTreeMixin implements _DbQuery {
   const _$DbQueryImpl(
       {required this.collection,
       required this.property,
-      required this.search,
+      required this.target,
       required this.limit});
 
   @override
-  final Collection collection;
+  final String collection;
   @override
-  final FurnitureProperty property;
+  final String property;
   @override
-  final String search;
+  final String target;
   @override
   final int limit;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DbQuery(collection: $collection, property: $property, search: $search, limit: $limit)';
+    return 'DbQuery(collection: $collection, property: $property, target: $target, limit: $limit)';
   }
 
   @override
@@ -157,7 +149,7 @@ class _$DbQueryImpl with DiagnosticableTreeMixin implements _DbQuery {
       ..add(DiagnosticsProperty('type', 'DbQuery'))
       ..add(DiagnosticsProperty('collection', collection))
       ..add(DiagnosticsProperty('property', property))
-      ..add(DiagnosticsProperty('search', search))
+      ..add(DiagnosticsProperty('target', target))
       ..add(DiagnosticsProperty('limit', limit));
   }
 
@@ -170,13 +162,13 @@ class _$DbQueryImpl with DiagnosticableTreeMixin implements _DbQuery {
                 other.collection == collection) &&
             (identical(other.property, property) ||
                 other.property == property) &&
-            (identical(other.search, search) || other.search == search) &&
+            (identical(other.target, target) || other.target == target) &&
             (identical(other.limit, limit) || other.limit == limit));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, collection, property, search, limit);
+      Object.hash(runtimeType, collection, property, target, limit);
 
   @JsonKey(ignore: true)
   @override
@@ -187,17 +179,17 @@ class _$DbQueryImpl with DiagnosticableTreeMixin implements _DbQuery {
 
 abstract class _DbQuery implements DbQuery {
   const factory _DbQuery(
-      {required final Collection collection,
-      required final FurnitureProperty property,
-      required final String search,
+      {required final String collection,
+      required final String property,
+      required final String target,
       required final int limit}) = _$DbQueryImpl;
 
   @override
-  Collection get collection;
+  String get collection;
   @override
-  FurnitureProperty get property;
+  String get property;
   @override
-  String get search;
+  String get target;
   @override
   int get limit;
   @override
