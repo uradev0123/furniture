@@ -11,6 +11,8 @@ import 'package:furniture/presentation/theme/images.dart';
 import 'package:furniture/domain/types/types.dart';
 import 'package:furniture/application/usecase/quiz/quiz_usecase.dart';
 
+import '../../../infrastructure/firebase/data_path.dart';
+
 enum GENRE {
   all('全て'),
   designer('デザイナー'),
@@ -44,7 +46,7 @@ class PageQuizSettingState extends ConsumerState<PageQuizSetting>{
 
     final selectList = ref.watch(selectListNotifierProvider);
 
-    // --------------------------- ラジオボタン変更メソッド ------------------------
+    // --------------------------- メソッド ------------------------
     void onChangedNumRadio(dynamic id) {
       setState(() {
         numRadioId = id;
@@ -56,25 +58,50 @@ class PageQuizSettingState extends ConsumerState<PageQuizSetting>{
       });
     }
 
-    // --------------------------- メソッド ------------------------
     // void pushQuizPage() {
     //   context.navigateTo(const RouteQuiz());
     // }
+    String getProperty(GENRE genre) {
+      final property = switch(genre) {
+        GENRE.all => 'all',
+        GENRE.designer => FurnitureProperty.designerId,
+        GENRE.brand => FurnitureProperty.brandId,
+        GENRE.culture => 'culture',
+      };
+
+      return property;
+    }
 
     // --------------------------- ボタン ------------------------
     final decideButton = ButtonL(
       text: '決定',
       onPressed: () async {
-        final noti = ref.watch(selectListNotifierProvider.notifier);
+        final noti = ref.read(selectListNotifierProvider.notifier);
         noti.updateState(genreRadioId);
 
-        final query = await showDialog(
+        final ids = await showDialog<List<String>>(
             context: context,
-            builder: (_) => QuizSelectDialog(checkIds: querySelectedIds),
+            builder: (_) => QuizSelectDialog(
+              genre: genreRadioId,
+            ),
         );
+        if(ids!.isNotEmpty) {
+          final query = DbQuery(
+              collection: Collection.furniture,
+              property: getProperty(genreRadioId),
+              target: ids.first,
+              limit: numRadioId,
+          );
+          debugPrint('query = ');
+          debugPrint('$query');
 
-        if(query != null) {
-          // queryを使ってDBからデータを取得
+          final service = FirestoreService();
+          final fList = await service.readFurnitureList(query);
+          debugPrint('debug furniture list from DB');
+          debugPrint('$fList');
+          final listNoti = ref.read(listNotifierProvider.notifier);
+          listNoti.updateState(fList);
+          context.navigateTo(RouteQuiz());
         }
       }
     );

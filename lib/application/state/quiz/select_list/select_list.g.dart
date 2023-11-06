@@ -7,7 +7,7 @@ part of 'select_list.dart';
 // **************************************************************************
 
 String _$selectListNotifierHash() =>
-    r'b54affaa1e083d5259c9aa27caaf4dce45d39610';
+    r'7d94b80356c1a3dca0ea89be225bd22aba1cc391';
 
 /// See also [SelectListNotifier].
 @ProviderFor(SelectListNotifier)
