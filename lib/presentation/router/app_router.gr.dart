@@ -9,6 +9,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i8;
+import 'package:flutter/material.dart' as _i10;
+import 'package:furniture/domain/types/types.dart' as _i9;
 import 'package:furniture/presentation/pages/brand/page_brand_list.dart' as _i1;
 import 'package:furniture/presentation/pages/designer/page_designer_list.dart'
     as _i2;
@@ -44,9 +46,13 @@ abstract class $AppRouter extends _i8.RootStackRouter {
       );
     },
     RouteQuiz.name: (routeData) {
+      final args = routeData.argsAs<RouteQuizArgs>();
       return _i8.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i4.PageQuiz(),
+        child: _i4.PageQuiz(
+          list: args.list,
+          key: args.key,
+        ),
       );
     },
     RouteQuizRouter.name: (routeData) {
@@ -114,16 +120,40 @@ class RouteFurnitureList extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.PageQuiz]
-class RouteQuiz extends _i8.PageRouteInfo<void> {
-  const RouteQuiz({List<_i8.PageRouteInfo>? children})
-      : super(
+class RouteQuiz extends _i8.PageRouteInfo<RouteQuizArgs> {
+  RouteQuiz({
+    required List<_i9.Furniture> list,
+    _i10.Key? key,
+    List<_i8.PageRouteInfo>? children,
+  }) : super(
           RouteQuiz.name,
+          args: RouteQuizArgs(
+            list: list,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'RouteQuiz';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i8.PageInfo<RouteQuizArgs> page =
+      _i8.PageInfo<RouteQuizArgs>(name);
+}
+
+class RouteQuizArgs {
+  const RouteQuizArgs({
+    required this.list,
+    this.key,
+  });
+
+  final List<_i9.Furniture> list;
+
+  final _i10.Key? key;
+
+  @override
+  String toString() {
+    return 'RouteQuizArgs{list: $list, key: $key}';
+  }
 }
 
 /// generated route for

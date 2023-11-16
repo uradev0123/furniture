@@ -80,9 +80,7 @@ class PageQuizSettingState extends ConsumerState<PageQuizSetting>{
           final fList = await service.readFurnitureList(query);
           debugPrint('debug furniture list from DB');
           debugPrint('$fList');
-          final listNoti = ref.read(listNotifierProvider.notifier);
-          listNoti.updateState(fList);
-          context.navigateTo(RouteQuiz());
+          context.navigateTo(RouteQuiz(list: fList));
         }
       }
     );
