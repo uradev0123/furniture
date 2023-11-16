@@ -11,7 +11,9 @@ import 'package:furniture/application/usecase/quiz/quiz_usecase.dart';
 
 @RoutePage()
 class PageQuiz extends ConsumerWidget {
-  const PageQuiz({super.key});
+  const PageQuiz({required this.list, super.key});
+
+  final List<Furniture> list;
 
   @override
   Widget build(BuildContext context, WidgetRef ref)  {
@@ -19,13 +21,6 @@ class PageQuiz extends ConsumerWidget {
     // ----------------------------------- ステイト -----------------------------------
     final index = ref.watch(indexNotifierProvider);
     final isQuestion = ref.watch(isQuestionNotifierProvider);
-
-    final listState = ref.watch(listNotifierProvider);
-    final list = listState.when(
-      data: (d) => d,
-      error: (e, s) => null,
-      loading: () => null,
-    );
 
     final details = ref.watch(detailsNotifierProvider);
     final detailsText = TestText(details);
@@ -42,7 +37,7 @@ class PageQuiz extends ConsumerWidget {
         text: '更新',
         onPressed: () {
           final usecase = UpdateQuestionUsecase(ref: ref);
-          usecase.updateQuestion(list!.elementAt(index));
+          usecase.updateQuestion(list.elementAt(index));
         }
     );
 
@@ -59,7 +54,7 @@ class PageQuiz extends ConsumerWidget {
       text: '次へ',
       onPressed: () async {
         final checkLast = CheckLastUsecase();
-        if(checkLast.checkLast(index, list!)) {
+        if(checkLast.checkLast(index, list)) {
           final isRetry = await showDialog(
             context: context,
             builder: (_) => const QuizEndDialog(),
@@ -77,28 +72,6 @@ class PageQuiz extends ConsumerWidget {
         }
       },
     );
-
-    // ---------------テスト-------------------
-    final numDropdownButton = DropdownButton(
-        items: const [
-          DropdownMenuItem(
-            value: 10,
-            child: Text('10'),
-          ),
-          DropdownMenuItem(
-            value: 30,
-            child: Text('30'),
-          ),
-          DropdownMenuItem(
-            value: 50,
-            child: Text('50'),
-          ),
-        ],
-        onChanged: (int? num) {}
-    );
-
-
-    // ---------------テスト-------------------
 
     // ----------------------------------- ページ -----------------------------------
     return Column(
